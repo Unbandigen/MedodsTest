@@ -1,5 +1,5 @@
  #Командлы для Docker:
- ##docker compose up -d build 
+ ##docker compose up -d build ##
  ##Через код в базе создастся пользователь с GUID 33b1ff59-184a-46a4-aa38-777f619f5582
     Запросы:
     для 1 эндпоинта: localhost:8080/get-token?GUID="33b1ff59-184a-46a4-aa38-777f619f5582"
