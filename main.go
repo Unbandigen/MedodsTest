@@ -37,7 +37,7 @@ type Tokens struct {
 func GetJWThandler(w http.ResponseWriter, r *http.Request) {
 
 	// Подключение к Mongo
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	clientOptions := options.Client().ApplyURI("mongodb://admin:password@mongo_db:27017")
 	client, err := mongo.Connect(context.Background(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
@@ -176,7 +176,7 @@ func RefreshHandler(w http.ResponseWriter, r *http.Request) {
 	hash.Write(refreshTokenBytes)
 	hashRefreshToken := hex.EncodeToString(hash.Sum(nil))
 
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	clientOptions := options.Client().ApplyURI("mongodb://admin:password@mongo_db:27017")
 	client, err := mongo.Connect(context.Background(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
@@ -248,6 +248,7 @@ func RefreshHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 }
 
 func main() {

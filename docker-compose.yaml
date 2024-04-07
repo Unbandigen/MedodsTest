@@ -1,24 +1,31 @@
-version: "3.2"
+version: "3.8"
 services:
+ mongo_db:
+  image: mongo:latest
+  ports:
+   - 27018:27017
+  environment:
+   MONGO_INITDB_ROOT_USERNAME: admin
+   MONGO_INITDB_ROOT_PASSWORD: password
+   MONGO_INITDB_DATABASE: mongo
+  networks:
+   - awesome
+  container_name: mongo_db
+  volumes:
+   - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+ web_app:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  container_name: web_app
+  ports:
+    - 8080:8080
+  networks:
+   - awesome
 
-  redis:
-    image: "redis:alpine"
-    command: redis-server
-    ports:
-     - "6379:6379"
+networks:
+ awesome: {}
 
-  php-redis-admin:
-    image: faktiva/php-redis-admin
-    environment:
-        - PHPREDMIN_DATABASE_REDIS_0_HOST=redis
-    ports:
-        - "8080:80"
-    depends_on:
-        - redis
-
-  redis-admin:
-      image: marian/rebrow
-      ports:
-          - "5001:5001"
-      depends_on:
-          - redis
+volumes:
+ awesome:
+  driver: local
